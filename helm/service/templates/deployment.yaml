@@ -8,12 +8,15 @@ spec:
       app: {{ .Release.Name }}
   template:
     metadata:
+      annotations:
+        date: {{ now | quote }}
       labels:
         app: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Release.Name }}
           image: notilya4/prometheus-test.service:latest
+          imagePullPolicy: Always
           env:
             - name: ASPNETCORE_URLS
               value: http://*:80
