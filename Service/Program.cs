@@ -1,4 +1,7 @@
 using OpenTelemetry.Metrics;
+using OpenTelemetry.ResourceDetectors.Container;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -9,17 +12,23 @@ services.AddSwaggerGen();
 services.AddHealthChecks();
 
 services.AddOpenTelemetry()
-    .WithMetrics(builder =>
+    .ConfigureResource(x =>
     {
-        builder.AddPrometheusExporter();
-        builder.AddMeter("Microsoft.AspNetCore.Hosting",
-                         "Microsoft.AspNetCore.Server.Kestrel");
-        builder.AddView("http-server-request-duration",
-            new ExplicitBucketHistogramConfiguration
-            {
-                Boundaries = new double[] { 0, 0.005, 0.01, 0.025, 0.05,
-                       0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10 }
-            });
+        x.AddDetector(new ContainerResourceDetector());
+        x.AddService("Service");
+    })
+    .WithMetrics(x =>
+    {
+        x.AddMeter("Microsoft.AspNetCore.Server.Kestrel");
+        x.AddAspNetCoreInstrumentation();
+        x.AddRuntimeInstrumentation();
+        x.AddProcessInstrumentation();
+        x.AddPrometheusExporter();
+    })
+    .WithTracing(x =>
+    {
+        x.AddAspNetCoreInstrumentation();
+        x.AddConsoleExporter();
     });
 
 var app = builder.Build();
