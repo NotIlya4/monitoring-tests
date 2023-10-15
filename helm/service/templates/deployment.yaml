@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: notilya4/prometheus-test.service:latest
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://*:80
+          ports:
+            - name: http-metrics
+              containerPort: 80

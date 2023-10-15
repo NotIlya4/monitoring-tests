@@ -1,4 +1,4 @@
 apiVersion: v2
-name: prometheus-discovery
+name: service
 type: application
 version: 1.0.0

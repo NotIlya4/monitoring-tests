@@ -11,6 +11,10 @@ repositories:
 
 releases:
   - name: prometheus
-    namespace: prometheus
     chart: prometheus-community/kube-prometheus-stack
     disableValidationOnInstall: true
+  
+  - name: myapp
+    chart: ./service/
+    needs:
+      - prometheus
