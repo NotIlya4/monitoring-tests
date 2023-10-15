@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 # Restore
 COPY Service/Service.csproj /src/Service/
@@ -11,7 +11,7 @@ COPY Service/ /src/Service/
 RUN dotnet build /src/Service/Service.csproj -c Release -o /app/build/
 RUN dotnet publish /src/Service/Service.csproj -c Release -o /app/publish/
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 
 ENV ASPNETCORE_URLS=http://*:5000
 EXPOSE 5000
