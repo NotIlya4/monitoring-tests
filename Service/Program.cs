@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.ResourceDetectors.Container;
 using OpenTelemetry.Resources;
@@ -20,7 +21,13 @@ services.AddOpenTelemetry()
     .WithMetrics(x =>
     {
         x.AddMeter("Microsoft.AspNetCore.Server.Kestrel");
-        x.AddAspNetCoreInstrumentation();
+        x.AddAspNetCoreInstrumentation(options =>
+        {
+            options.Enrich = (string name, HttpContext context, ref TagList tags) =>
+            {
+                tags.Add("path", context.Request.Path);
+            };
+        });
         x.AddRuntimeInstrumentation();
         x.AddProcessInstrumentation();
         x.AddPrometheusExporter();
