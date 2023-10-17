@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: {{ .Release.Name }}
-          image: notilya4/prometheus-test.service:latest
+          image: notilya4/monitoring-tests.service:latest
           imagePullPolicy: Always
           env:
             - name: ASPNETCORE_URLS
