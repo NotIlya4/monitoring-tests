@@ -28,7 +28,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: notilya4/prometheus-test.service
+          images: notilya4/monitoring-tests.service
           tags: |
             type=sha
             type=raw,value=latest
@@ -36,7 +36,7 @@ jobs:
       - name: 🐳 Build and push to Docker Hub
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./Service/
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
