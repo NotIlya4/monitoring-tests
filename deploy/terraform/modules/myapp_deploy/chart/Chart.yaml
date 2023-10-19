@@ -1,4 +1,4 @@
 apiVersion: v2
-name: service
+name: myapp
 type: application
 version: 1.0.0

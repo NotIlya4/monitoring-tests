@@ -9,5 +9,5 @@ spec:
     matchLabels:
       app: {{ .Release.Name }}
   podMetricsEndpoints:
-    - port: http-metrics
+    - port: port
       path: /metrics

@@ -3,24 +3,30 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}
 spec:
-  replicas: 5
+  replicas: {{ .Values.deployment.replicas }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}
   template:
     metadata:
       annotations:
+        {{- if .Values.deployment.recreatePodsOnEachRelease }}
         date: {{ now | quote }}
+        {{- end }}
       labels:
         app: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Release.Name }}
-          image: notilya4/monitoring-tests.service:latest
+          image: {{ .Values.deployment.image }}
           imagePullPolicy: Always
           env:
             - name: ASPNETCORE_URLS
-              value: http://*:80
+              value: http://*:{{ .Values.deployment.port }}
           ports:
-            - name: http-metrics
+            - name: port
               containerPort: 80
+          livenessProbe:
+            httpGet:
+              port: port
+              path: /healthz
