@@ -8,6 +8,8 @@ spec:
   selector:
     matchLabels:
       app: {{ .Release.Name }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
   podMetricsEndpoints:
     - port: port
-      path: /metrics

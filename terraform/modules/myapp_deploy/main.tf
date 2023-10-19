@@ -6,11 +6,12 @@ terraform {
   }
 }
 
-locals {
-  chart_path = "./${path.module}/chart/"
+variable "namepspace" {
+  default = "default"
 }
 
 locals {
+  chart_path = "./${path.module}/chart/"
   chart_hash = sha1(join("", [for f in fileset(local.chart_path, "**/*.yaml"): filesha1("${local.chart_path}/${f}")]))
 }
 
@@ -22,4 +23,7 @@ resource "helm_release" "myapp" {
     name  = "chart-hash"
     value = local.chart_hash
   }
+  
+  namespace = var.namepspace
+  create_namespace = true
 }

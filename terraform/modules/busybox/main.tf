@@ -1,6 +1,6 @@
 ﻿terraform {
   required_providers {
-    helm = {
+    kubernetes = {
       source = "hashicorp/kubernetes"
     }
   }
