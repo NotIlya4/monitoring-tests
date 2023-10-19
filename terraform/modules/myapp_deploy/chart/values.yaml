@@ -5,4 +5,5 @@ deployment:
   image: notilya4/monitoring-tests.service:latest
 
 service:
+  type: LoadBalancer
   port: 5000

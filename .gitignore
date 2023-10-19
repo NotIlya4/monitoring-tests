@@ -5,3 +5,4 @@ kubeconfig
 bin
 obj
 .idea
+prometheus_stack_default_values.yaml
