@@ -1,16 +1,16 @@
-dependency "kubeconfig" {
-  config_path = "${path_relative_from_include()}/kubeconfig"
+dependency "kind" {
+  config_path = "${path_relative_from_include()}/kind"
 }
 
 inputs = {
-  __client_certificate = dependency.kubeconfig.outputs.client_certificate
-  __client_key = dependency.kubeconfig.outputs.client_key
-  __cluster_ca_certificate = dependency.kubeconfig.outputs.cluster_ca_certificate
-  __endpoint = dependency.kubeconfig.outputs.endpoint
+  __client_certificate = dependency.kind.outputs.client_certificate
+  __client_key = dependency.kind.outputs.client_key
+  __cluster_ca_certificate = dependency.kind.outputs.cluster_ca_certificate
+  __endpoint = dependency.kind.outputs.endpoint
 }
 
 generate "provider" {
-  path = "__kube-provider.tf"
+  path = "./.terraform/__kube-provider.tf"
   if_exists = "overwrite"
   contents = <<EOF
 provider "kubernetes" {
