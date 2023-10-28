@@ -1,3 +1,0 @@
-﻿kind: KubeProxyConfiguration
-# configure proxy metrics bind address
-metricsBindAddress: 0.0.0.0
