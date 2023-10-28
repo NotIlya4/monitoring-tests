@@ -6,3 +6,5 @@ bin
 obj
 .idea
 prometheus_stack_default_values.yaml
+*.generated*
+test-cluster-config

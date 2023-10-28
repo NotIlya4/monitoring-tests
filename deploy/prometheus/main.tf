@@ -9,19 +9,6 @@ resource "helm_release" "prometheus" {
 
   namespace = var.namespace
   create_namespace = true
-
-  set {
-    name  = "prometheus.service.type"
-    value = "LoadBalancer"
-  }
-
-  set {
-    name  = "grafana.service.type"
-    value = "LoadBalancer"
-  }
-
-  set {
-    name  = "grafana.service.port"
-    value = 3000
-  }
+  
+  values = [file("values.yaml")]
 }

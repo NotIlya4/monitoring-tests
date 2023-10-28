@@ -1,0 +1,3 @@
+﻿grafana:
+  service:
+    port: 3000

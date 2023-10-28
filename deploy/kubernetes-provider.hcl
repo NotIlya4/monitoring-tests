@@ -10,7 +10,7 @@ inputs = {
 }
 
 generate "provider" {
-  path = "./.terraform/__kube-provider.tf"
+  path = "kube-provider.generated.tf"
   if_exists = "overwrite"
   contents = <<EOF
 provider "kubernetes" {
