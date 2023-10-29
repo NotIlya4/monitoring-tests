@@ -1,0 +1,64 @@
+﻿default_junkfile_path := "junkfile"
+
+remove junkfile=default_junkfile_path:
+  #!python
+  import os
+  import shutil
+  from gitignore_parser import parse_gitignore
+  
+  path = "{{junkfile}}"
+  matches = parse_gitignore(path)
+  
+  tobe_deleted_files = []
+  tobe_deleted_dirs = []
+  
+  for root, dirs, files in os.walk(".", topdown=False):
+      def make_full_path(root, name):
+          return os.path.abspath(os.path.join(root, name))
+  
+      for name in files:
+          full_path = make_full_path(root, name)
+          if matches(full_path):
+              tobe_deleted_files.append(full_path)
+  
+      for name in dirs:
+          full_path = make_full_path(root, name)
+          if matches(full_path):
+              tobe_deleted_dirs.append(full_path)
+  
+  for full_path in tobe_deleted_dirs:
+      if os.path.exists(full_path):
+          shutil.rmtree(full_path)
+  
+  for full_path in tobe_deleted_files:
+      if os.path.exists(full_path):
+          os.remove(full_path)
+
+remove-all junkfile=default_junkfile_path:
+  #!python
+  import os
+  import subprocess
+  
+  path = "{{junkfile}}"
+  content = """
+  .terraform*
+  *.generated*
+  *.tfstate*
+  """
+  
+  with open(path, "w") as file:
+    file.write(content)
+    
+  subprocess.run("just remove")
+
+remove-generated junkfile=default_junkfile_path:
+  #!python
+  import os
+  
+  path = "{{junkfile}}"
+  content = """
+  *.generated*
+  """
+  
+  with open("test.txt", "w") as file:
+    file.write()

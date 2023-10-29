@@ -11,14 +11,17 @@ provider "shell" {}
 
 resource "shell_script" "minikube" {
   lifecycle_commands {
-    create = "task minikube"
+    create = "minikube delete && just minikube-start"
+    update = "minikube start"
     delete = "minikube delete"
   }
 }
 
-resource "null_resource" "kubeconfig" {
-  provisioner "local-exec" {
-    command = "kubectl config view > kubeconfig.generated"
+resource "shell_script" "kubeconfig" {
+  lifecycle_commands {
+    create = "just kubeconfig"
+    update = "just kubeconfig"
+    delete = "just kubeconfig-delete"
   }
 }
 
