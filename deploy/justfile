@@ -106,5 +106,13 @@ remove-tfstate:
     
   subprocess.run("just _remove")
 
+# Applies all terraform modules
+apply:
+  terragrunt run-all apply --terragrunt-non-interactive
+
+# Destroys all terraform module
+destroy:
+  terragrunt run-all destroy --terragrunt-non-interactive
+
 _remove-junkfile:
   rm {{default_junkfile_path}}
