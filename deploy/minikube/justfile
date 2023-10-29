@@ -1,4 +1,5 @@
-﻿default_kubeconfig_file := "kubeconfig.generated"
+﻿set fallback
+default_kubeconfig_file := "kubeconfig.generated"
 
 kubeconfig file=default_kubeconfig_file:
   #!python

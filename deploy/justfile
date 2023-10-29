@@ -90,5 +90,21 @@ remove-init:
     
   subprocess.run("just _remove")
 
+# Removes tfstate files
+remove-tfstate:
+  #!python
+  import os
+  import subprocess
+  
+  path = "{{default_junkfile_path}}"
+  content = """
+  *.tfstate*
+  """
+  
+  with open(path, "w") as file:
+    file.write(content)
+    
+  subprocess.run("just _remove")
+
 _remove-junkfile:
   rm {{default_junkfile_path}}

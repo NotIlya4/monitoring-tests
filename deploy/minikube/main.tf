@@ -13,7 +13,7 @@ resource "shell_script" "minikube" {
   lifecycle_commands {
     create = "minikube delete && just minikube-start"
     update = "minikube start"
-    delete = "minikube delete"
+    delete = "minikube delete && just remove-tfstate && just remove-generated"
   }
 }
 
@@ -23,6 +23,8 @@ resource "shell_script" "kubeconfig" {
     update = "just kubeconfig"
     delete = "just kubeconfig-delete"
   }
+  
+  depends_on = [shell_script.minikube]
 }
 
 output "kubeconfig_path" {
