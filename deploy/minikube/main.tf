@@ -12,7 +12,6 @@ provider "shell" {}
 resource "shell_script" "minikube" {
   lifecycle_commands {
     create = "just minikube-restart"
-    update = "minikube start"
     delete = "just minikube-delete && just remove-all"
   }
 }
