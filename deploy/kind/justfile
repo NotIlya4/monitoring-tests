@@ -1,0 +1,34 @@
+﻿name := "monitoring-test"
+kubeconfig_file := "kubeconfig.generated"
+
+create:
+  kind create cluster --name {{ name }} --config ./cluster.yaml
+
+update:
+  -kind create cluster --name {{ name }} --config ./cluster.yaml
+
+delete:
+  kind delete cluster --name {{ name }}
+
+kubeconfig:
+  #!python
+  import subprocess
+  import os
+  
+  file_path = "{{kubeconfig_file}}"
+  path = os.path.dirname(file_path)
+  kubeconfig = subprocess.run("kubectl config view --raw", capture_output=True, text=True)
+  
+  if path != "" and not os.path.exists(path):
+      os.makedirs(path)
+  
+  with open(file_path, 'w') as file:
+      file.write(kubeconfig.stdout)
+
+kubeconfig-delete:
+  #!python
+  import os
+  
+  file = "{{kubeconfig_file}}"
+  if os.path.exists(file):
+    os.remove(file)

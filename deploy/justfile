@@ -106,9 +106,9 @@ remove-tfstate:
     
   subprocess.run("just _remove")
 
-# Runs minikube tunnel
-minikube-tunnel:
-  minikube tunnel
+# Forwards prometheus grafana and myapp
+forward:
+  
 
 # Applies all terraform modules
 apply:

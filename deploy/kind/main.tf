@@ -1,4 +1,4 @@
-terraform {
+﻿terraform {
   required_providers {
     shell = {
       source = "scottwinkler/shell"
@@ -9,10 +9,11 @@ terraform {
 
 provider "shell" {}
 
-resource "shell_script" "minikube" {
+resource "shell_script" "kind" {
   lifecycle_commands {
-    create = "just minikube-restart"
-    delete = "just minikube-delete && just remove-all"
+    create = "just create"
+    update = "just update"
+    delete = "just delete"
   }
 }
 
@@ -22,8 +23,8 @@ resource "shell_script" "kubeconfig" {
     update = "just kubeconfig"
     delete = "just kubeconfig-delete"
   }
-  
-  depends_on = [shell_script.minikube]
+
+  depends_on = [shell_script.kind]
 }
 
 output "kubeconfig_path" {
@@ -31,5 +32,5 @@ output "kubeconfig_path" {
 }
 
 output "context" {
-  value = "minikube"
+  value = "kind-monitoring-test"
 }

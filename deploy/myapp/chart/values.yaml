@@ -5,5 +5,5 @@ deployment:
   image: notilya4/monitoring-tests.service:latest
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 5000
