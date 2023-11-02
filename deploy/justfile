@@ -106,13 +106,17 @@ remove-tfstate:
     
   subprocess.run("just _remove")
 
+# Runs minikube tunnel
 minikube-tunnel:
   minikube tunnel
 
 # Applies all terraform modules
 apply:
-  terragrunt run-all init 
   terragrunt run-all apply --terragrunt-non-interactive
+
+# Inits all terraform modules
+init:
+  terragrunt run-all init --terragrunt-non-interactive
 
 # Destroys all terraform module
 destroy:
