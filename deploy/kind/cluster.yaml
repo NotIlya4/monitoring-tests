@@ -20,3 +20,10 @@ kubeadmConfigPatches:
     kind: KubeProxyConfiguration
     # configure proxy metrics bind address
     metricsBindAddress: 0.0.0.0
+nodes:
+  - role: control-plane
+  - role: control-plane
+  - role: control-plane
+  - role: worker
+  - role: worker
+  - role: worker

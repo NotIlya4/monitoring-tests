@@ -108,7 +108,7 @@ remove-tfstate:
 
 # Forwards prometheus grafana and myapp
 forward:
-  
+  kubectl port-forward service/prometheus-prometheus -n monitoring 9090:9090 & kubectl port-forward service/grafana -n monitoring 3000:3000 & kubectl port-forward service/myapp -n myapp 5000:5000
 
 # Applies all terraform modules
 apply:
@@ -121,6 +121,9 @@ init:
 # Destroys all terraform module
 destroy:
   terragrunt run-all destroy --terragrunt-non-interactive
+
+ping:
+  k6 run ./ping-myapp.js -u 100 -d 2m
 
 _remove-junkfile:
   rm {{default_junkfile_path}}

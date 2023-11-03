@@ -1,6 +1,6 @@
 deployment:
   port: 80
-  replicas: 5
+  replicas: 10
   recreatePodsOnEachRelease: true
   image: notilya4/monitoring-tests.service:latest
 

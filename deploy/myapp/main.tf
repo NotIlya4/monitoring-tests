@@ -1,8 +1,4 @@
-﻿variable "namespace" {
-  default = "default"
-}
-
-locals {
+﻿locals {
   chart_path = "./${path.module}/chart/"
   chart_hash = sha1(join("", [for f in fileset(local.chart_path, "**/*.yaml"): filesha1("${local.chart_path}/${f}")]))
 }
@@ -16,6 +12,6 @@ resource "helm_release" "myapp" {
     value = local.chart_hash
   }
 
-  namespace = var.namespace
+  namespace = "myapp"
   create_namespace = true
 }
