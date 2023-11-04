@@ -2,6 +2,9 @@
 
 prometheus:
   fullnameOverride: prometheus
+  service:
+    type: NodePort
+    nodePort: 31235
   prometheusSpec:
     storageSpec:
       volumeClaimTemplate:
@@ -14,7 +17,9 @@ prometheus:
 grafana:
   fullnameOverride: grafana
   service:
+    type: NodePort
     port: 3000
+    nodePort: 31647
 
 alertmanager:
   fullnameOverride: alertmanager

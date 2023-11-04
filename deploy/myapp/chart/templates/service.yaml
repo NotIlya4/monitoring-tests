@@ -5,9 +5,10 @@ metadata:
   labels:
     app: {{ .Release.Name }}
 spec:
-  type: {{ .Values.service.type }}
+  type: NodePort
   selector:
     app: {{ .Release.Name }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: port
+      nodePort: 31935
