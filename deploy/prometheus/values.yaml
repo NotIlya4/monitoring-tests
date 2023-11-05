@@ -16,6 +16,10 @@ prometheus:
 
 grafana:
   fullnameOverride: grafana
+  useStatefulSet: true
+  persistence:
+    enabled: true
+    size: 5Gi
   service:
     type: NodePort
     port: 3000
