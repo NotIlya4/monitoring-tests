@@ -1,9 +1,11 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.ResourceDetectors.Container;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Service;
 using Service.Monitoring;
 using Service.Services;
 
@@ -35,22 +37,21 @@ services.AddOpenTelemetry()
     .ConfigureResource(x =>
     {
         x.AddDetector(new ContainerResourceDetector());
-        x.AddService("Service");
+        x.AddService("WeatherService");
     })
     .WithMetrics(x =>
     {
         x.AddMeter(AppMetrics.MeterName);
-        x.AddMeter("Microsoft.AspNetCore.Server.Kestrel");
         x.AddAspNetCoreInstrumentation();
         x.AddRuntimeInstrumentation();
         x.AddProcessInstrumentation();
-        x.AddPrometheusExporter();
+        x.AddOtlpExporter();
     })
     .WithTracing(x =>
     {
         x.AddSource(AppActivitySource.ActivitySourceName);
         x.AddAspNetCoreInstrumentation();
-        x.AddConsoleExporter();
+        x.AddOtlpExporter();
     });
 
 var app = builder.Build();
@@ -65,7 +66,6 @@ app.Use(async (context, next) =>
 
     await next.Invoke();
 });
-app.MapPrometheusScrapingEndpoint();
 
 app.UseHealthChecks("/healthz");
 app.UseSwagger();

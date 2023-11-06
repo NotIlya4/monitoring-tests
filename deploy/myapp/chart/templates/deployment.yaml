@@ -30,3 +30,4 @@ spec:
             httpGet:
               port: port
               path: /healthz
+        - name: 

@@ -16,8 +16,8 @@ public class AppMetrics
     {
         var meter = factory.Create(AppMetrics.MeterName);
         TemperatureServiceCallDuration = meter.CreateHistogram<double>(TemperatureServiceCalledMetricName, "s",
-            $"Tracks duration of {nameof(TemperatureService)} call");
+            $"Tracks duration of {nameof(TemperatureService)} call", new []{new KeyValuePair<string, object?>("pisya", "popa")});
         FeelsLikeServiceCallDuration = meter.CreateHistogram<double>(FeelsLikeServiceCalledMetricName, "s",
-            $"Tracks duration of {nameof(FeelsLikeService)} call");
+            $"Tracks duration of {nameof(FeelsLikeService)} call"); 
     }
 }
