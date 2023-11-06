@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Service.Services;
 
 namespace Service.Controllers;
 
@@ -6,27 +7,16 @@ namespace Service.Controllers;
 [Route("weather")]
 public class WeatherForecastController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    private readonly IWeatherService _service;
 
-    private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(IWeatherService service)
     {
-        _logger = logger;
+        _service = service;
     }
-
+    
     [HttpGet]
-    public IEnumerable<WeatherForecast> Get(int number = 100)
+    public ActionResult<IEnumerable<WeatherForecast>> Get(string city, int days = 100)
     {
-        return Enumerable.Range(1, number).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+        return Ok(_service.GetWeatherForecast(city, days));
     }
 }
