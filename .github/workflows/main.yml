@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - Service/**
-      - .github/workflows/**
-      - Dockerfile
-      - .dockerignore
 
 jobs:
   docker:
