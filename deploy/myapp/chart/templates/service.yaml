@@ -11,9 +11,9 @@ spec:
   ports:
     - name: myapp
       port: {{ .Values.service.port }}
-      targetPort: {{ .Values.deployment.port }}
+      targetPort: myapp
       nodePort: 31935
-    - name: metrics
+    - name: prometheus
       port: 8889
-      targetPort: 8889
+      targetPort: prometheus
       nodePort: 31562

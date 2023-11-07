@@ -29,5 +29,5 @@ spec:
               containerPort: 80
           livenessProbe:
             httpGet:
-              port: 80
+              port: myapp
               path: /healthz
