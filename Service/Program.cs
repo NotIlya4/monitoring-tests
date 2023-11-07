@@ -36,7 +36,6 @@ services.Decorate<IWeatherService, WeatherMonitorService>();
 services.AddOpenTelemetry()
     .ConfigureResource(x =>
     {
-        x.AddDetector(new ContainerResourceDetector());
         x.AddService("WeatherService");
     })
     .WithMetrics(x =>
@@ -45,7 +44,10 @@ services.AddOpenTelemetry()
         x.AddAspNetCoreInstrumentation();
         x.AddRuntimeInstrumentation();
         x.AddProcessInstrumentation();
-        x.AddOtlpExporter();
+        x.AddOtlpExporter((options, readerOptions) =>
+        {
+            readerOptions.PeriodicExportingMetricReaderOptions.ExportIntervalMilliseconds = 20 * 1000;
+        });
     })
     .WithTracing(x =>
     {

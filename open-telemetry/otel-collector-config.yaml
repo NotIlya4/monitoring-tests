@@ -6,17 +6,11 @@ receivers:
 exporters:
   prometheus:
     endpoint: "0.0.0.0:8889"
-
-processors:
-  transform:
-    metric_statements:
-      - context: datapoint
-        statements:
-          - set(attributes["biba"], resource.attributes["biba"])
+    metric_expiration: 30s
+    send_timestamps: true
 
 service:
   pipelines:
     metrics:
-      receivers: [ otlp ]
-      processors: [ transform ]
+      receivers: [ hostmetrics, otlp ]
       exporters: [ prometheus ]
