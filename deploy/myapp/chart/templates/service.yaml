@@ -9,6 +9,11 @@ spec:
   selector:
     app: {{ .Release.Name }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: port
+    - name: myapp
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.deployment.port }}
       nodePort: 31935
+    - name: metrics
+      port: 8889
+      targetPort: 8889
+      nodePort: 31562

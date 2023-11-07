@@ -29,6 +29,8 @@ nodes:
         hostPort: 5000
       - containerPort: 31235
         hostPort: 9090
+      - containerPort: 31562
+        hostPort: 8889
   - role: control-plane
   - role: control-plane
   - role: worker

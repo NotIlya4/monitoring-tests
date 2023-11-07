@@ -5,7 +5,3 @@
 include "kubernetes" {
   path = "../kubernetes-provider.hcl"
 }
-
-dependencies {
-  paths = ["../prometheus", "../open-telemetry"]
-}

@@ -12,5 +12,5 @@ exporters:
 service:
   pipelines:
     metrics:
-      receivers: [ hostmetrics, otlp ]
+      receivers: [ otlp ]
       exporters: [ prometheus ]

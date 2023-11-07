@@ -10,6 +10,7 @@ spec:
   template:
     metadata:
       annotations:
+        sidecar.opentelemetry.io/inject: "true"
         {{- if .Values.deployment.recreatePodsOnEachRelease }}
         date: {{ now | quote }}
         {{- end }}
@@ -24,10 +25,9 @@ spec:
             - name: ASPNETCORE_URLS
               value: http://*:{{ .Values.deployment.port }}
           ports:
-            - name: port
+            - name: myapp
               containerPort: 80
           livenessProbe:
             httpGet:
-              port: port
+              port: 80
               path: /healthz
-        - name: 

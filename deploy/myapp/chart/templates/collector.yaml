@@ -1,0 +1,23 @@
+﻿apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: {{ .Release.Name }}-collector
+spec:
+  mode: sidecar
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+    
+    exporters:
+      prometheus:
+        endpoint: "0.0.0.0:8889"
+        metric_expiration: 30s
+        send_timestamps: true
+    
+    service:
+      pipelines:
+        metrics:
+          receivers: [ otlp ]
+          exporters: [ prometheus ]
