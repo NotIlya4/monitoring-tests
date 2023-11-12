@@ -1,5 +1,4 @@
 .terraform*
-kubeconfig
 .kube/config
 *.tfstate*
 bin
