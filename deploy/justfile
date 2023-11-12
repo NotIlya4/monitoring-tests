@@ -125,5 +125,8 @@ destroy:
 ping:
   k6 run ./ping-myapp.js -u 100 -d 10m
 
+dump:
+  cd postgres && just dump
+
 _remove-junkfile:
   rm {{default_junkfile_path}}
