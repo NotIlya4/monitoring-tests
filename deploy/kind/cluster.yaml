@@ -31,4 +31,6 @@ nodes:
         hostPort: 9090
       - containerPort: 31562
         hostPort: 8889
+      - containerPort: 31624
+        hostPort: 5432
   - role: worker

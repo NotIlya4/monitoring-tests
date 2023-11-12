@@ -16,6 +16,11 @@ prometheus:
 
 grafana:
   fullnameOverride: grafana
+  replicas: 1
+  grafana.ini:
+    database:
+      type: postgres
+      name: grafana
   service:
     type: NodePort
     port: 3000

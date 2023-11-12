@@ -1,0 +1,11 @@
+﻿fullnameOverride: postgres
+
+primary:
+  service:
+    type: NodePort
+    nodePorts:
+      postgresql: 31624
+  initdb:
+    scripts:
+      grafana.sql: |
+        CREATE DATABASE grafana;

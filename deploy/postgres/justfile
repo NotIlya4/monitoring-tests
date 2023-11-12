@@ -1,0 +1,7 @@
+@dump:
+  PGPASSWORD="pgpass" pg_dump --username=postgres --dbname=grafana --no-password --file=dump.sql
+  echo ✅ Dump successful!
+
+@restore:
+  PGPASSWORD="pgpass" psql --dbname=grafana -U postgres < dump.sql
+  echo ✅ Restore successful!
