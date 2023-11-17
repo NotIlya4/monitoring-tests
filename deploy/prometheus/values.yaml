@@ -29,6 +29,8 @@ grafana:
 alertmanager:
   fullnameOverride: alertmanager
   alertmanagerSpec:
+    alertmanagerConfigMatcherStrategy:
+      type: None
     storage:
       volumeClaimTemplate:
         spec:
@@ -36,3 +38,6 @@ alertmanager:
           resources:
             requests:
               storage: 5Gi
+    alertmanagerConfigSelector:
+      matchLabels:
+        release: prometheus

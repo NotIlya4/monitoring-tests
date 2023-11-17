@@ -1,0 +1,16 @@
+﻿apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: prometheus-rules
+  labels:
+    release: prometheus
+spec:
+  groups:
+    - name: TestAlerts
+      rules:
+        - alert: MyAppInstancesIsLowerThan5
+          expr: count(up{job="myapp/myapp"} == 1) <= 5
+          for: 10s
+        - alert: MyApp99QuantileIsMoreThan10Ms
+          expr: histogram_quantile(0.99, sum by(le, pod, path) (rate(http_server_request_duration_seconds_bucket[1m]))) > 0.01
+          for: 10s

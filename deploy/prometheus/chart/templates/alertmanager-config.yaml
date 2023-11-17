@@ -1,0 +1,17 @@
+﻿apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: alertmanager-config
+  labels:
+    release: prometheus
+spec:
+  route:
+    receiver: 'telepush'
+    groupBy: ['job', 'pod', 'path', 'alertname']
+    groupWait: 10s
+    groupInterval: 10s
+    repeatInterval: 1m
+  receivers:
+  - name: 'telepush'
+    webhook_configs:
+    - url: 'https://telepush.dev/api/inlets/alertmanager/4a4e88'

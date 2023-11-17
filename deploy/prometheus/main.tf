@@ -35,3 +35,23 @@ resource "helm_release" "prometheus" {
     value = var.postgres_password
   }
 }
+
+locals {
+  chart_path = "./${path.module}/chart/"
+  chart_hash = sha1(join("", [for f in fileset(local.chart_path, "**/*.yaml"): filesha1("${local.chart_path}/${f}")]))
+}
+
+resource "helm_release" "prometheus_additional_resources" {
+  chart = local.chart_path
+  name = "prometheus-additional-resources"
+
+  set {
+    name  = "chart-hash"
+    value = local.chart_hash
+  }
+
+  namespace = "monitoring"
+  create_namespace = true
+  
+  depends_on = [helm_release.prometheus]
+}
